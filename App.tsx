@@ -35,6 +35,10 @@ export default class App extends Component<AppProps, AppState> {
 
   forceLoadTodos = () => GetController(TodosController).load(state => state.todos, true);
 
+  loadTodoXYZ = () => GetController(TodosController).load(state => state.todoMap.xyz);
+
+  loadTodoABC = () => GetController(TodosController).load(state => state.todoMap.abc);
+
 
 
   render() {
@@ -74,6 +78,14 @@ export default class App extends Component<AppProps, AppState> {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.forceLoadTodos} style={styles.button}>
               <Text style={styles.buttonText}>Load todos forcefully</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.loadTodoXYZ} style={styles.button}>
+              <Text style={styles.buttonText}>Load Todo XYZ</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.loadTodoABC} style={styles.button}>
+              <Text style={styles.buttonText}>Load Todo ABC</Text>
             </TouchableOpacity>
           </View>
 
