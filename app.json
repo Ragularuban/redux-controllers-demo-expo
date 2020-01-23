@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "redux-controllers-test",
-    "slug": "redux-controllers-test",
+    "name": "redux-controllers-demo",
+    "slug": "redux-controllers-demo",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [

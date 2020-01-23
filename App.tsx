@@ -5,6 +5,7 @@ import { initStore, RootState } from './controllers/store';
 import { GetController, Connect, ReduxConnect } from 'redux-controllers';
 import { CounterController } from './controllers/counter/counter.controller';
 import Counter, { CounterConnectedProps } from './components/counter.component';
+import { TodosController } from './controllers/todos/todos.controller';
 
 // Init Store
 initStore();
@@ -28,6 +29,11 @@ export default class App extends Component<AppProps, AppState> {
   loadCounterFromBackendMethod1 = () => GetController(CounterController).loadCounterFromBackend();
 
   loadCounterFromBackendMethod2 = () => GetController(CounterController).loadCounterFromBackend2().then(d => console.log('Promise Resolved'));
+
+
+  loadTodos = () => GetController(TodosController).load(state => state.todos);
+
+  forceLoadTodos = () => GetController(TodosController).load(state => state.todos, true);
 
 
 
@@ -60,6 +66,14 @@ export default class App extends Component<AppProps, AppState> {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.loadCounterFromBackendMethod2} style={styles.button}>
               <Text style={styles.buttonText}>Load Async 2 </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.loadTodos} style={styles.button}>
+              <Text style={styles.buttonText}>Load todos</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.forceLoadTodos} style={styles.button}>
+              <Text style={styles.buttonText}>Load todos forcefully</Text>
             </TouchableOpacity>
           </View>
 
