@@ -14,12 +14,39 @@ export class CounterController extends ReduxControllerBase<CounterState, RootSta
     }
 
     @ReduxAction()
+    setCounter(counter: number) {
+        this.state.counter = counter;
+    }
+
+    @ReduxAction()
     increaseCounter(increaseBy?: number) {
         if (increaseBy) {
             this.state.counter = this.state.counter + increaseBy;
         } else {
             this.state.counter++;
         }
+    }
+
+    @ReduxAsyncAction()
+    async loadCounterFromBackend() {
+        const counterValue: number = await new Promise(resolve => {
+            setTimeout(() => {
+                resolve(100);
+            }, 2000);
+        });
+
+        this.commit(state => {
+            state.counter = counterValue;
+        });
+    }
+
+    async loadCounterFromBackend2() {
+        const counterValue: number = await new Promise(resolve => {
+            setTimeout(() => {
+                resolve(100);
+            }, 2000);
+        });
+        this.setCounter(counterValue);
     }
 
 }

@@ -25,6 +25,10 @@ export default class App extends Component<AppProps, AppState> {
 
   counterConnector = (state: RootState): CounterConnectedProps => ({ counter: state.counterState.counter });
 
+  loadCounterFromBackendMethod1 = () => GetController(CounterController).loadCounterFromBackend();
+
+  loadCounterFromBackendMethod2 = () => GetController(CounterController).loadCounterFromBackend2().then(d => console.log('Promise Resolved'));
+
 
 
   render() {
@@ -48,6 +52,14 @@ export default class App extends Component<AppProps, AppState> {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.increaseBy10} style={styles.button}>
               <Text style={styles.buttonText}>Increase by 10 </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.loadCounterFromBackendMethod1} style={styles.button}>
+              <Text style={styles.buttonText}>Load Async 1</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.loadCounterFromBackendMethod2} style={styles.button}>
+              <Text style={styles.buttonText}>Load Async 2 </Text>
             </TouchableOpacity>
           </View>
 
