@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { initStore } from './controllers/store';
 
-
+// Init Store
+initStore();
 export default class App extends Component<AppProps, AppState> {
 
 
