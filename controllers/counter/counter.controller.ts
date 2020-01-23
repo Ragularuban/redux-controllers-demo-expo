@@ -49,4 +49,15 @@ export class CounterController extends ReduxControllerBase<CounterState, RootSta
         this.setCounter(counterValue);
     }
 
+
+    @ReduxWatch((rootState: RootState) => ({ counter: rootState.counterState.counter }))
+    onCounterChange({ counter }: { counter: number }) {
+        console.log('Counter Changed', counter);
+    }
+
+    @ReduxEffect('LOAD_COUNTER_FROM_BACKEND_COMMIT')
+    async onLoadedFromBackend() {
+        console.log('Loaded from backend');
+    }
+
 }
