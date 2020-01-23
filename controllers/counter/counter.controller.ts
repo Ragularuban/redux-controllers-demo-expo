@@ -13,4 +13,13 @@ export class CounterController extends ReduxControllerBase<CounterState, RootSta
         counter: 0
     }
 
+    @ReduxAction()
+    increaseCounter(increaseBy?: number) {
+        if (increaseBy) {
+            this.state.counter = this.state.counter + increaseBy;
+        } else {
+            this.state.counter++;
+        }
+    }
+
 }
