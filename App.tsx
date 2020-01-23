@@ -1,23 +1,38 @@
 import * as React from 'react';
 import { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import { initStore } from './controllers/store';
-import { GetController } from 'redux-controllers';
+import { initStore, RootState } from './controllers/store';
+import { GetController, Connect, ReduxConnect } from 'redux-controllers';
 import { CounterController } from './controllers/counter/counter.controller';
+import Counter, { CounterConnectedProps } from './components/counter.component';
 
 // Init Store
 initStore();
+
+// @ReduxConnect((state: RootState) => ({ counter: state.counterState.counter }))
 export default class App extends Component<AppProps, AppState> {
 
   increment = () => GetController(CounterController).increaseCounter();
 
+  increaseBy10 = () => GetController(CounterController).increaseCounter(10);
+
   readState = () => console.log(GetController(CounterController).state);
+
+  readAsObservable = () => GetController(CounterController)
+    .subscribeTo(state => state.counter)
+    .subscribe(counter => console.log(`Counter:${counter}`));
+
+
+  counterConnector = (state: RootState): CounterConnectedProps => ({ counter: state.counterState.counter });
+
 
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.h1}>Hello World</Text>
+        <Connect connector={this.counterConnector}>
+          <Counter />
+        </Connect>
         <View style={styles.actionsContainer}>
           <View style={styles.row}>
             <TouchableOpacity onPress={this.increment} style={styles.button}>
@@ -25,6 +40,14 @@ export default class App extends Component<AppProps, AppState> {
             </TouchableOpacity>
             <TouchableOpacity onPress={this.readState} style={styles.button}>
               <Text style={styles.buttonText}>Read </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <TouchableOpacity onPress={this.readAsObservable} style={styles.button}>
+              <Text style={styles.buttonText}>Subscribe </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.increaseBy10} style={styles.button}>
+              <Text style={styles.buttonText}>Increase by 10 </Text>
             </TouchableOpacity>
           </View>
 
@@ -63,6 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'stretch',
+    padding: 10,
   },
   counterText: {
     flex: 1,
